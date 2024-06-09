@@ -1,0 +1,25 @@
+{
+  "name": "lucia-api",
+  "version": "1.0.0",
+  "description": "This api is based on Lumen framework version 8.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "mjml": "^4.14.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegoezbustamante/lucia-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diegoezbustamante/lucia-api/issues"
+  },
+  "homepage": "https://github.com/diegoezbustamante/lucia-api#readme"
+}

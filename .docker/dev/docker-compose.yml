@@ -1,0 +1,86 @@
+version: '3.5'
+
+services:
+
+  # This service name is just used within this stack, so no need trying to make it unique
+  memory_db:
+
+    # Container name should be unique if possible
+    container_name: lucia_api_memory_db
+    image: redis:6.0.9
+    # 6379
+
+    networks:
+      - sail
+
+  textract:
+    container_name: lucia_api_textract
+    build:
+      context: ../aws-textract-reader/
+      dockerfile: Dockerfile
+    image: textract:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../aws-textract-reader/:/var/www/html
+      - ../aws-textract-reader/.aws:/root/.aws
+
+    networks:
+      - sail
+
+  web_app:
+    container_name: lucia_api_app
+
+    environment:
+      - NODE_ENV=development
+      - USE_SSL=true
+
+    build:
+        context: ../dev/../../
+        dockerfile: .Dockerfile
+        args:
+            NODE_ENV: development
+
+    depends_on:
+      - memory_db
+      - textract
+
+
+    # you can use image directly here if you are not building a Dockerfile
+    # Only should be unique if you wish to build it as an image, name here should be unique
+    image: lucia_api_app:latest
+
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+
+    # Mounting is not required in live
+    volumes:
+      - ../../:/var/www/html
+
+    deploy:
+      resources:
+        # https://docs.docker.com/compose/compose-file/compose-file-v3/#resources
+        # docker inspect name
+        limits:
+          #          cpus: '0.75'
+          memory: 3512M
+
+        # always available
+        reservations:
+          #          cpus: '0.5'
+          memory: 2024M
+
+    ports:
+    - 14080:80
+    - 14443:443
+
+    networks:
+      - sail
+
+networks:
+  sail:
+    driver: bridge
+
+
+
+

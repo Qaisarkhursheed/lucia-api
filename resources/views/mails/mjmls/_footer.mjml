@@ -1,0 +1,5 @@
+ <mj-section background-color="#fffff">
+   <mj-column>
+     <mj-text align="center" font-size="10px" line-height="16px" color="#000000">©Lucia 2022. All rights reserved.</mj-text>
+   </mj-column>
+ </mj-section>
